@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GiftElegance | Premium Gift Store</title>
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Google Fonts -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Playfair+Display:wght@700;800;900&display=swap"
+        rel="stylesheet">
+
+    <style>
+        * {
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .heading-font {
+            font-family: 'Playfair Display', serif;
+        }
+
+        /* Premium Background */
+        .premium-bg {
+            background: linear-gradient(135deg, #fdf2f8 0%, #f0f9ff 50%, #fefce8 100%);
+        }
+
+        /* Glass Effect */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.08);
+        }
+
+        /* 3D Card Hover */
+        .card-3d {
+            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .card-3d:hover {
+            transform: translateY(-15px) scale(1.03);
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.12);
+        }
+
+        /* Floating Animation */
+        .floating {
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-15px);
+            }
+        }
+
+        /* Text Gradient */
+        .text-gradient {
+            background: linear-gradient(90deg, #ec4899, #8b5cf6, #3b82f6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Button Glow */
+        .btn-glow {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-glow::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transform: rotate(45deg);
+            transition: transform 0.6s;
+        }
+
+        .btn-glow:hover::before {
+            transform: rotate(45deg) translate(50%, 50%);
+        }
+
+        /* Smooth transitions */
+        .smooth-transition {
+            transition: all 0.3s ease;
+        }
+
+        /* Wishlist Active State - Heart Red hi rahega */
+        .wishlist-btn.active i {
+            color: #ff0000 !important;
+            /* Pure Red */
+            -webkit-text-fill-color: #ff0000 !important;
+            /* Agar text-gradient use ho raha ho toh */
+            transform: scale(1.2);
+            transition: all 0.3s ease;
+        }
+    </style>
+</head>
+
+<body class="premium-bg">
+
+    <!-- ========== NAVIGATION BAR ========== -->
+    <nav class="glass-card sticky top-0 z-50 py-4 px-6">
+        <div class="max-w-7xl mx-auto flex justify-between items-center">
+            <!-- Logo -->
+            <div class="flex items-center space-x-3">
+                <div
+                    class="w-12 h-12 rounded-xl bg-gradient-to-br from-pink-500 to-purple-500 flex items-center justify-center shadow-lg">
+                    <i class="fas fa-gift text-white text-xl"></i>
+                </div>
+                <div>
+                    <h1 class="heading-font text-2xl font-bold text-gray-800">GiftElegance</h1>
+                    <p class="text-xs text-gray-500">Premium Gifts, Curated with Love</p>
+                </div>
+            </div>
+
+            <!-- Navigation Menu -->
+            <div class="hidden md:flex items-center space-x-8">
+                <a href="#home" class="text-gray-700 hover:text-pink-600 font-medium smooth-transition">Home</a>
+                <a href="#categories"
+                    class="text-gray-700 hover:text-purple-600 font-medium smooth-transition">Collections</a>
+                <a href="#contact" class="text-gray-700 hover:text-blue-600 font-medium smooth-transition">Contact</a>
+                <a href="#security" class="text-gray-700 hover:text-green-600 font-medium smooth-transition">
+                    <i class="fas fa-shield-alt mr-1"></i> Security
+                </a>
+            </div>
+
+            <!-- Cart Button -->
+            <button id="cartBtn"
+                class="px-5 py-2.5 rounded-full bg-gradient-to-r from-pink-500 to-purple-500 text-white font-medium shadow-lg hover:shadow-xl smooth-transition relative group">
+                <i class="fas fa-shopping-cart mr-2"></i>
+                <span>Cart</span>
+                <span id="cartCount" class="ml-2 bg-white/20 text-white text-xs px-2 py-0.5 rounded-full">(0)</span>
+
+                <!-- Tooltip -->
+                <div
+                    class="absolute -top-10 left-1/2 transform -translate-x-1/2 bg-gray-900 text-white text-xs px-3 py-2 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap z-50">
+                    🛒 Your cart is empty
+                </div>
+            </button>
+        </div>
+    </nav>
+
+    <!-- ========== HERO SECTION ========== -->
+    <section id="home" class="pt-28 pb-20 px-6">
+        <div class="max-w-7xl mx-auto">
+            <div class="grid lg:grid-cols-2 gap-12 items-center">
+                <!-- Left Content -->
+                <div>
+                    <div
+                        class="inline-flex items-center px-4 py-2 rounded-full bg-gradient-to-r from-pink-100 to-purple-100 mb-6">
+                        <i class="fas fa-star text-pink-500 mr-2"></i>
+                        <span class="font-bold text-pink-700">🎁 Exclusive Diwali Collection!</span>
+                    </div>
+
+                    <h1 class="heading-font text-5xl md:text-6xl font-bold text-gray-900 leading-tight mb-6">
+                        Gifts That <br>
+                        <span class="text-gradient">Spark Joy</span> & <br>
+                        <span class="text-gradient">Create Memories</span>
+                    </h1>
+
+                    <p class="text-gray-600 text-lg mb-8 max-w-xl">
+                        Discover premium, handcrafted gifts that tell stories. Each piece is carefully curated to bring
+                        memories into life.
+                    </p>
+
+                    <div class="flex flex-wrap gap-4">
+                        <div class="flex flex-wrap gap-4">
+                            <a href="#categories"
+                                class="px-8 py-3.5 rounded-full bg-gradient-to-r from-pink-500 to-purple-500 text-white font-bold text-lg shadow-xl hover:shadow-2xl smooth-transition btn-glow inline-flex items-center">
+                                <i class="fas fa-play-circle mr-2"></i> Explore Collections
+                            </a>
+
+                            <button id="viewWishlist"
+                                class="px-8 py-3.5 rounded-full border-2 border-gray-800 text-gray-800 font-bold text-lg hover:bg-gray-800 hover:text-white smooth-transition">
+                                <i class="fas fa-heart mr-2"></i> View Wishlist
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Stats -->
+                    <div class="flex space-x-10 mt-14">
+                        <div>
+                            <div class="text-3xl font-bold text-gray-900">5K+</div>
+                            <div class="text-gray-500">Happy Customers</div>
+                        </div>
+                        <div>
+                            <div class="text-3xl font-bold text-gray-900">4.9★</div>
+                            <div class="text-gray-500">Average Rating</div>
+                        </div>
+                        <div>
+                            <div class="text-3xl font-bold text-gray-900">24h</div>
+                            <div class="text-gray-500">Express Delivery</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right - Hero Image -->
+                <div class="relative">
+                    <div class="glass-card card-3d floating rounded-3xl p-6 max-w-md mx-auto">
+                        <div class="relative overflow-hidden rounded-2xl mb-6">
+                            <img src="images/main.jpg" alt="Premium Gift" class="w-full h-64 object-cover rounded-2xl">
+                            <div
+                                class="absolute top-4 right-4 bg-gradient-to-r from-pink-500 to-purple-500 text-white px-3 py-1.5 rounded-full text-sm font-bold">
+                                ⭐ Bestseller
+                            </div>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-900 mb-3">Personalized Wooden Letters</h3>
+                        <p class="text-gray-600 mb-4">"Open When" romantic gift with woodblock inscription</p>
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <span class="text-2xl font-bold text-gradient">₹799</span>
+                                <div class="text-sm text-gray-500">★★★★★ (128 reviews)</div>
+                            </div>
+                            <button
+                                class="add-to-cart-btn w-12 h-12 rounded-full bg-gradient-to-r from-pink-500 to-purple-500 text-white flex items-center justify-center shadow-lg hover:shadow-xl smooth-transition"
+                                data-id="101" data-name="Personalized Wooden Letters" data-price="799">
+                                <i class="fas fa-plus"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== 5 CATEGORIES SECTION ========== -->
+    <section id="categories" class="py-20 px-6 bg-white/50">
+        <div class="max-w-7xl mx-auto">
+            <!-- Section Header -->
+            <div class="text-center mb-16">
+                <h2 class="heading-font text-4xl md:text-5xl font-bold text-gray-900 mb-6">
+                    Curated <span class="text-gradient">Collections</span>
+                </h2>
+                <p class="text-gray-600 text-lg max-w-2xl mx-auto">
+                    5 premium gift categories, each designed to create unforgettable moments
+                </p>
+            </div>
+
+            <!-- 5 Categories Grid -->
+            <div id="categories" class="grid md:grid-cols-2 lg:grid-cols-5 gap-6">
+
+                <div class="glass-card card-3d rounded-2xl p-6 text-center group relative">
+
+                    <button
+                        class="wishlist-btn absolute top-4 right-4 z-50 text-gray-400 hover:text-red-500 transition-colors"
+                        data-id="201" data-name="Personalized Gift">
+                        <i class="fas fa-heart text-xl"></i>
+                    </button>
+
+                    <div
+                        class="w-16 h-16 rounded-xl bg-gradient-to-br from-pink-100 to-rose-100 flex items-center justify-center mx-auto mb-4 group-hover:scale-110 smooth-transition">
+                        <i class="fas fa-heart text-2xl text-pink-600"></i>
+                    </div>
+
+                    <div class="h-40 rounded-lg overflow-hidden mb-4">
+                        <img src="images/personalgift 1.webp" alt="Gifts"
+                            class="w-full h-full object-cover group-hover:scale-105 smooth-transition duration-500">
+                    </div>
+
+                    <h3 class="text-xl font-bold text-gray-900 mb-2">Personalized Gifts</h3>
+                    <p class="text-gray-600 text-sm mb-4">Create custom gifts for your special ones.</p>
+                    <div class="text-xl font-bold text-pink-600 mb-4">From ₹299</div>
+
+                    <div class="space-y-2">
+                        <button
+                            class="w-full py-2.5 rounded-full bg-gradient-to-r from-pink-50 to-rose-50 text-pink-700 font-medium hover:from-pink-100 hover:to-rose-100 smooth-transition">
+                            <i class="fas fa-eye mr-2"></i> View Collection
+                        </button>
+                        <button
+                            class="add-to-cart-btn w-full py-2.5 rounded-full bg-gradient-to-r from-pink-500 to-rose-500 text-white font-medium hover:from-pink-600 hover:to-rose-600 smooth-transition"
+                            data-id="201" data-name="Personalized Gifts" data-price="299">
+                            <i class="fas fa-shopping-cart mr-2"></i> Add to Cart
+                        </button>
+                    </div>
+                </div>
+                <!-- 2. Corporate Gifts -->
+                <div class="glass-card card-3d rounded-2xl p-6 text-center group relative">
+
+                    <button
+                        class="wishlist-btn absolute top-4 right-4 z-50 text-gray-400 hover:text-red-500 transition-colors"
+                        data-id="202" data-name="Corporate Gift">
+                        <i class="fas fa-heart text-xl"></i>
+                    </button>
+
+                    <div
+                        class="w-16 h-16 rounded-xl bg-gradient-to-br from-pink-100 to-rose-100 flex items-center justify-center mx-auto mb-4 group-hover:scale-110 smooth-transition">
+                        <i class="fas fa-heart text-2xl text-pink-600"></i>
+                    </div>
+
+                    <div class="h-40 rounded-lg overflow-hidden mb-4">
+                        <img src="images/cg2.webp" alt="Gifts"
+                            class="w-full h-full object-cover group-hover:scale-105 smooth-transition duration-500">
+                    </div>
+
+                    <h3 class="text-xl font-bold text-gray-900 mb-2">Corporate Gifts</h3>
+                    <p class="text-gray-600 text-sm mb-4">Make your colleagues feel truly valued.</p>
+                    <div class="text-xl font-bold text-pink-600 mb-4">From ₹499</div>
+
+                    <div class="space-y-2">
+                        <button
+                            class="w-full py-2.5 rounded-full bg-gradient-to-r from-pink-50 to-rose-50 text-pink-700 font-medium hover:from-pink-100 hover:to-rose-100 smooth-transition">
+                            <i class="fas fa-eye mr-2"></i> View Collection
+                        </button>
+                        <button
+                            class="add-to-cart-btn w-full py-2.5 rounded-full bg-gradient-to-r from-pink-500 to-rose-500 text-white font-medium hover:from-pink-600 hover:to-rose-600 smooth-transition"
+                            data-id="202" data-name="Corporate Gifts" data-price="499">
+                            <i class="fas fa-shopping-cart mr-2"></i> Add to Cart
+                        </button>
+                    </div>
+                </div>
+
+                <!-- 3. Premium Jewelry -->
+                <div class="glass-card card-3d rounded-2xl p-6 text-center group relative">
+
+                    <button
+                        class="wishlist-btn absolute top-4 right-4 z-50 text-gray-400 hover:text-red-500 transition-colors"
+                        data-id="203" data-name="Premium Jewelry">
+                        <i class="fas fa-heart text-xl"></i>
+                    </button>
+
+                    <div
+                        class="w-16 h-16 rounded-xl bg-gradient-to-br from-pink-100 to-rose-100 flex items-center justify-center mx-auto mb-4 group-hover:scale-110 smooth-transition">
+                        <i class="fas fa-heart text-2xl text-pink-600"></i>
+                    </div>
+
+                    <div class="h-40 rounded-lg overflow-hidden mb-4">
+                        <img src="images/j1.jpg" alt="Gifts"
+                            class="w-full h-full object-cover group-hover:scale-105 smooth-transition duration-500">
+                    </div>
+
+                    <h3 class="text-xl font-bold text-gray-900 mb-2">Premium Jewelry</h3>
+                    <p class="text-gray-600 text-sm mb-4">Elegant pieces that make you shine brighter.</p>
+                    <div class="text-xl font-bold text-pink-600 mb-4">From ₹499</div>
+
+                    <div class="space-y-2">
+                        <button
+                            class="w-full py-2.5 rounded-full bg-gradient-to-r from-pink-50 to-rose-50 text-pink-700 font-medium hover:from-pink-100 hover:to-rose-100 smooth-transition">
+                            <i class="fas fa-eye mr-2"></i> View Collection
+                        </button>
+                        <button
+                            class="add-to-cart-btn w-full py-2.5 rounded-full bg-gradient-to-r from-pink-500 to-rose-500 text-white font-medium hover:from-pink-600 hover:to-rose-600 smooth-transition"
+                            data-id="203" data-name="Premium Jewelry" data-price="499">
+                            <i class="fas fa-shopping-cart mr-2"></i> Add to Cart
+                        </button>
+                    </div>
+                </div>
+
+                <!-- 4. Travel Souvenirs -->
+                <div class="glass-card card-3d rounded-2xl p-6 text-center group relative">
+
+                    <button
+                        class="wishlist-btn absolute top-4 right-4 z-50 text-gray-400 hover:text-red-500 transition-colors"
+                        data-id="204" data-name="Souvenirs Gift">
+                        <i class="fas fa-heart text-xl"></i>
+                    </button>
+
+                    <div
+                        class="w-16 h-16 rounded-xl bg-gradient-to-br from-pink-100 to-rose-100 flex items-center justify-center mx-auto mb-4 group-hover:scale-110 smooth-transition">
+                        <i class="fas fa-heart text-2xl text-pink-600"></i>
+                    </div>
+
+                    <div class="h-40 rounded-lg overflow-hidden mb-4">
+                        <img src="images/image.png" alt="Gifts"
+                            class="w-full h-full object-cover group-hover:scale-105 smooth-transition duration-500">
+                    </div>
+
+                    <h3 class="text-xl font-bold text-gray-900 mb-2">Souvenirs Gifts</h3>
+                    <p class="text-gray-600 text-sm mb-4">Handcrafted wooden treasures filled with memories</p>
+                    <div class="text-xl font-bold text-pink-600 mb-4">From ₹399</div>
+
+                    <div class="space-y-2">
+                        <button
+                            class="w-full py-2.5 rounded-full bg-gradient-to-r from-pink-50 to-rose-50 text-pink-700 font-medium hover:from-pink-100 hover:to-rose-100 smooth-transition">
+                            <i class="fas fa-eye mr-2"></i> View Collection
+                        </button>
+                        <button
+                            class="add-to-cart-btn w-full py-2.5 rounded-full bg-gradient-to-r from-pink-500 to-rose-500 text-white font-medium hover:from-pink-600 hover:to-rose-600 smooth-transition"
+                            data-id="204" data-name="Souvenirs Gifts" data-price="399">
+                            <i class="fas fa-shopping-cart mr-2"></i> Add to Cart
+                        </button>
+                    </div>
+                </div>
+
+                <!-- 5. Handicraft Items -->
+                <div class="glass-card card-3d rounded-2xl p-6 text-center group relative">
+
+                    <button
+                        class="wishlist-btn absolute top-4 right-4 z-50 text-gray-400 hover:text-red-500 transition-colors"
+                        data-id="205" data-name="Handicraft">
+                        <i class="fas fa-heart text-xl"></i>
+                    </button>
+
+                    <div
+                        class="w-16 h-16 rounded-xl bg-gradient-to-br from-pink-100 to-rose-100 flex items-center justify-center mx-auto mb-4 group-hover:scale-110 smooth-transition">
+                        <i class="fas fa-heart text-2xl text-pink-600"></i>
+                    </div>
+
+                    <div class="h-40 rounded-lg overflow-hidden mb-4">
+                        <img src="images/h1.avif" alt="Gifts"
+                            class="w-full h-full object-cover group-hover:scale-105 smooth-transition duration-500">
+                    </div>
+
+                    <h3 class="text-xl font-bold text-gray-900 mb-2">Handicraft Items</h3>
+                    <p class="text-gray-600 text-sm mb-4">Crafted with love and meticulous detail</p>
+                    <div class="text-xl font-bold text-pink-600 mb-4">From ₹1999</div>
+
+                    <div class="space-y-2">
+                        <button
+                            class="w-full py-2.5 rounded-full bg-gradient-to-r from-pink-50 to-rose-50 text-pink-700 font-medium hover:from-pink-100 hover:to-rose-100 smooth-transition">
+                            <i class="fas fa-eye mr-2"></i> View Collection
+                        </button>
+                        <button
+                            class="add-to-cart-btn w-full py-2.5 rounded-full bg-gradient-to-r from-pink-500 to-rose-500 text-white font-medium hover:from-pink-600 hover:to-rose-600 smooth-transition"
+                            data-id="205" data-name="Handicraft" data-price="1999">
+                            <i class="fas fa-shopping-cart mr-2"></i> Add to Cart
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== CONTACT SECTION ========== -->
+    <section id="contact" class="py-20 px-6 premium-bg">
+        <div class="max-w-4xl mx-auto glass-card rounded-3xl p-8">
+            <h2 class="heading-font text-3xl font-bold text-center mb-8">Contact Us</h2>
+            <div class="grid md:grid-cols-2 gap-8">
+                <!-- Contact Info -->
+                <div>
+                    <h3 class="text-xl font-bold mb-6">Get in Touch</h3>
+                    <div class="space-y-6">
+                        <div class="flex items-center">
+                            <div class="w-12 h-12 bg-pink-100 rounded-full flex items-center justify-center mr-4">
+                                <i class="fas fa-phone text-pink-600"></i>
+                            </div>
+                            <div>
+                                <p class="font-medium">Phone</p>
+                                <p class="text-gray-600">+91 98765 43210</p>
+                                <p class="text-sm text-gray-500">(Demo number for project)</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center">
+                            <div class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mr-4">
+                                <i class="fas fa-envelope text-blue-600"></i>
+                            </div>
+                            <div>
+                                <p class="font-medium">Email</p>
+                                <p class="text-gray-600">hello@giftelegance.in</p>
+                                <p class="text-sm text-gray-500">(Demo email for project)</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center">
+                            <div class="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center mr-4">
+                                <i class="fab fa-whatsapp text-green-600"></i>
+                            </div>
+                            <div>
+                                <p class="font-medium">WhatsApp</p>
+                                <p class="text-gray-600">+91 98765 43210 ✨</p>
+                                <p class="text-sm text-gray-500">(For demonstration only)</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Contact Form -->
+                <div>
+                    <h3 class="text-xl font-bold mb-6">Send Message</h3>
+                    <form id="contactForm" class="space-y-4">
+                        <input type="text" placeholder="Your Name"
+                            class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-pink-500 focus:border-transparent"
+                            required>
+                        <input type="email" placeholder="Your Email"
+                            class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-pink-500 focus:border-transparent"
+                            required>
+                        <textarea placeholder="Your Message" rows="4"
+                            class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-pink-500 focus:border-transparent"></textarea>
+                        <button type="submit"
+                            class="w-full py-3.5 rounded-full bg-gradient-to-r from-pink-500 to-purple-500 text-white font-bold hover:shadow-xl smooth-transition">
+                            <i class="fas fa-paper-plane mr-2"></i> Send Message
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== SECURITY SECTION ========== -->
+    <section id="security" class="py-20 px-6 bg-gray-900 text-white">
+        <div class="max-w-7xl mx-auto">
+            <h2 class="heading-font text-4xl font-bold text-center mb-4">
+                <i class="fas fa-shield-alt mr-3"></i>Your Security Is Our Priority
+            </h2>
+            <p class="text-center text-gray-300 text-lg max-w-3xl mx-auto mb-12">
+                As a cybersecurity-conscious developer, I've implemented multiple layers of protection for your data.
+            </p>
+
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="bg-gray-800 p-8 rounded-2xl border border-gray-700">
+                    <div class="text-green-400 text-3xl mb-4">
+                        <i class="fas fa-lock"></i>
+                    </div>
+                    <h4 class="text-xl font-bold mb-3">End-to-End Encryption</h4>
+                    <p class="text-gray-400">All payment & personal data encrypted with AES-256.</p>
+                </div>
+                <div class="bg-gray-800 p-8 rounded-2xl border border-gray-700">
+                    <div class="text-blue-400 text-3xl mb-4">
+                        <i class="fas fa-user-shield"></i>
+                    </div>
+                    <h4 class="text-xl font-bold mb-3">GDPR Compliance</h4>
+                    <p class="text-gray-400">We don't store unnecessary personal data.</p>
+                </div>
+                <div class="bg-gray-800 p-8 rounded-2xl border border-gray-700">
+                    <div class="text-red-400 text-3xl mb-4">
+                        <i class="fas fa-bug"></i>
+                    </div>
+                    <h4 class="text-xl font-bold mb-3">Penetration Tested</h4>
+                    <p class="text-gray-400">Regular security audits & vulnerability assessments.</p>
+                </div>
+            </div>
+
+            <div class="mt-12 bg-gray-800 rounded-2xl p-8 border border-gray-700 max-w-4xl mx-auto">
+                <h4 class="text-2xl font-bold mb-4">
+                    <i class="fas fa-code mr-2"></i>Developer's Cybersecurity Note
+                </h4>
+                <p class="text-gray-300 mb-4">
+                    As a BCA student aspiring for cybersecurity, I've designed this website with security best
+                    practices:
+                </p>
+                <ul class="grid md:grid-cols-2 gap-3 text-gray-400">
+                    <li><i class="fas fa-check-circle text-green-400 mr-2"></i>Input validation & sanitization</li>
+                    <li><i class="fas fa-check-circle text-green-400 mr-2"></i>HTTPS enforcement</li>
+                    <li><i class="fas fa-check-circle text-green-400 mr-2"></i>XSS & CSRF protection</li>
+                    <li><i class="fas fa-check-circle text-green-400 mr-2"></i>Secure session management</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== FOOTER ========== -->
+    <footer class="bg-gray-900 text-white py-12 px-6 border-t border-gray-800">
+        <div class="max-w-7xl mx-auto">
+            <div class="md:flex justify-between items-center">
+                <div class="mb-6 md:mb-0">
+                    <div class="flex items-center mb-4">
+                        <i class="fas fa-gift text-3xl text-pink-500 mr-3"></i>
+                        <span class="heading-font text-2xl font-bold">GiftElegance</span>
+                    </div>
+                    <p class="text-gray-400">© 2024 GiftElegance Premium Gift Shop. All rights reserved.</p>
+                </div>
+                <div class="text-gray-400">
+                    <p class="mb-2">
+                        <i class="fas fa-laptop-code mr-2"></i>
+                        Developed with ❤️ by Aayushi | BCA 1st Year
+                    </p>
+                    <p>
+                        <i class="fas fa-shield-alt mr-2"></i>
+                        Cybersecurity Enthusiast | Backend Aspirant
+                    </p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript File -->
+    <script src="script.js"></script>
+</body>
+
+</html>
